@@ -32,13 +32,14 @@ jobs:
 
     - name: Build
       run: |
+        mkdir /binaries
         cd go
         export GOOS="linux"
         export GOARCH="amd64"
-        go build -v ./... -o /tmp/wormhole.i64
+        go build -v ./... -o /binaries/wormhole.i64
         export GOOS="windows"
         export GOARCH="amd64"
-        go build -v ./... -o /tmp/wormhole.exe
+        go build -v ./... -o /binaries/wormhole.exe
 
     - name: Test
       run: |
@@ -49,6 +50,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: wormhole
-        path: /tmp/wormhole*
+        path: /binaries/wormhole*
         
         
