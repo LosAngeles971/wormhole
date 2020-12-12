@@ -32,13 +32,14 @@ jobs:
 
     - name: Build
       run: |
+        export WORKSPACE="/home/runner/work/wormhole/wormhole"
         cd go
         export GOOS="linux"
         export GOARCH="amd64"
-        go build -v ./... -o wormhole.i64
+        go build -v ./... -o ../wormhole.i64
         export GOOS="windows"
         export GOARCH="amd64"
-        go build -v ./... -o wormhole.exe
+        go build -v ./... -o ../wormhole.exe
 
     - name: Test
       run: |
