@@ -32,7 +32,6 @@ jobs:
 
     - name: Build
       run: |
-#        mkdir /home/runner/work/wormhole/wormhole/binaries
         cd go
         export GOOS="linux"
         export GOARCH="amd64"
