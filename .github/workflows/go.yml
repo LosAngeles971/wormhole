@@ -32,8 +32,10 @@ jobs:
 
     - name: Build
       run: |
+        pwd
         export WORKSPACE="/home/runner/work/wormhole/wormhole"
         cd go
+        pwd
         export GOOS="linux"
         export GOARCH="amd64"
         go build -v ./... -o ../wormhole.i64
