@@ -36,8 +36,19 @@ jobs:
         export GOOS="linux"
         export GOARCH="amd64"
         go build -v ./... -o /tmp/wormhole.i64
+        export GOOS="windows"
+        export GOARCH="amd64"
+        go build -v ./... -o /tmp/wormhole.exe
 
     - name: Test
       run: |
         cd go
         go test -v ./...
+
+    - name: Publish
+      uses: actions/upload-artifact@v2
+      with:
+        name: wormhole
+        path: /tmp/wormhole*
+        
+        
