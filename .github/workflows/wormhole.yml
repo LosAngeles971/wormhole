@@ -33,7 +33,7 @@ jobs:
     - name: Build
       run: |
         export CI_PROJECT_DIR="/home/runner/work/wormhole/wormhole"
-        $CI_PROJECT_DIR/build/build.sh win
+        sh $CI_PROJECT_DIR/build/build.sh win
 
     - name: Test
       run: |
@@ -44,6 +44,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: wormhole
-        path: wormhole*
+        path: bin/wormhole*
         
         
