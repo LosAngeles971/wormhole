@@ -1,4 +1,4 @@
-name: Go
+name: Wormhole
 
 on:
   workflow_dispatch:
@@ -36,6 +36,7 @@ jobs:
       run: |
         export CI_PROJECT_DIR="/home/runner/work/wormhole/wormhole"
         sh $CI_PROJECT_DIR/build/build.sh win
+        ls -l $CI_PROJECT_DIR/bin/
 
     - name: Test
       run: |
