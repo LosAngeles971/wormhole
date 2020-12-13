@@ -1,4 +1,4 @@
-name: Wormhole
+name: Wormhole Go
 
 on:
   workflow_dispatch:
@@ -8,6 +8,10 @@ on:
   pull_request:
     branches: [ main ]
 
+defaults:
+  run:
+    shell: bash
+    
 jobs:
 
   build:
@@ -36,9 +40,9 @@ jobs:
       run: |
         export CI_PROJECT_DIR="/home/runner/work/wormhole/wormhole"
         mkdir -p $CI_PROJECT_DIR/bin
-        sh $CI_PROJECT_DIR/build/build.sh win
+        chmod 755 $CI_PROJECT_DIR/build/build.sh
+        $CI_PROJECT_DIR/build/build.sh win
         ls -l $CI_PROJECT_DIR/bin/
-      shell: bash
 
     - name: Test
       run: |
