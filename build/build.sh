@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -z $CI_PROJECT_DIR ]]
+if [ -z $CI_PROJECT_DIR ]
 then
     echo "Missing CI_PROJECT_DIR"
     exit 1
@@ -32,15 +32,15 @@ build_arm() {
 }
 
 cd $CI_PROJECT_DIR/go
-if [[ "$1" == "win" ]] || [[ "$1" == "all" ]]
+if [ "$1" == "win" ] || [ "$1" == "all" ]
 then
     build_windows
 fi
-if [[ "$1" == "linux" ]] || [[ "$1" == "all" ]]
+if [ "$1" == "linux" ] || [ "$1" == "all" ]
 then
     build_linux
 fi
-if [[ "$1" == "arm" ]] || [[ "$1" == "all" ]]
+if [ "$1" == "arm" ] || [ "$1" == "all" ]
 then
     build_arm
 fi
