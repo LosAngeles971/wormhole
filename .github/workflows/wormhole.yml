@@ -35,7 +35,7 @@ jobs:
     - name: Build
       run: |
         export CI_PROJECT_DIR="/home/runner/work/wormhole/wormhole"
-        ls -l $CI_PROJECT_DIR/bin/
+        mkdir -p $CI_PROJECT_DIR/bin
         sh $CI_PROJECT_DIR/build/build.sh win
         ls -l $CI_PROJECT_DIR/bin/
       shell: bash
