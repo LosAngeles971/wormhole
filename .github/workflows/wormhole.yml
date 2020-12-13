@@ -32,16 +32,8 @@ jobs:
 
     - name: Build
       run: |
-        pwd
-        export WORKSPACE="/home/runner/work/wormhole/wormhole"
-        cd go
-        pwd
-        export GOOS="linux"
-        export GOARCH="amd64"
-        go build -v ./... -o ../wormhole.i64
-        export GOOS="windows"
-        export GOARCH="amd64"
-        go build -v ./... -o ../wormhole.exe
+        export CI_PROJECT_DIR="/home/runner/work/wormhole/wormhole"
+        $CI_PROJECT_DIR/build/build.sh win
 
     - name: Test
       run: |

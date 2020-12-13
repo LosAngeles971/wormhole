@@ -45,47 +45,44 @@ func getHost(endpoint string) (Host, error) {
 	return host, nil
 }
 
-func handleChannel(client net.Conn, target Host) {
-	log.Println("Creating a channel...")
-	targetConn, err := net.Dial("tcp", target.getEndpoint())
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-	defer targetConn.Close()
+func loop(sourceConn net.Conn, targetConn net.Conn) {
 	for {
-		_, err := io.Copy(client, targetConn)
+		_, err := io.Copy(sourceConn, targetConn)
 		if err != nil {
 			log.Fatal(err)
 			log.Println("Closing channel due error in communication between source to target")
 			break
 		}
-		_, err2 := io.Copy(targetConn, client)
-		if err2 != nil {
-			log.Fatal(err2)
-			log.Println("Closing channel due error in communication between target to source")
-			break
-		}
 	}
-	client.Close()
+	sourceConn.Close()
 	log.Println("Channel closed")
-	openConnections--
+}
+
+func channel(sourceConn net.Conn, target Host) error {
+	log.Println("Creating a channel...")
+	targetConn, err := net.Dial("tcp", target.getEndpoint())
+	if err != nil {
+		return err
+	}
+	go loop(sourceConn, targetConn)
+	go loop(targetConn, sourceConn)
+	return nil
 }
 
 func Open() {
 	log.Println("Starting server...")
 	log.Println("Number of max connections: ", MaxConnections)
-	ss, err := getHost(Source)
+	source, err := getHost(Source)
 	if err != nil {
 		log.Fatalln(err)
 		os.Exit(1)
 	}
-	tt, err2 := getHost(Target)
+	target, err2 := getHost(Target)
 	if err2 != nil {
 		log.Fatalln(err2)
 		os.Exit(1)
 	}
-	listener, err3 := net.Listen("tcp", ss.getEndpoint())
+	listener, err3 := net.Listen("tcp", source.getEndpoint())
 	if err3 != nil {
 		log.Fatalln(err)
 		os.Exit(1)
@@ -104,7 +101,7 @@ func Open() {
 			}
 		} else {
 			log.Println("Creating a new channel...")
-			go handleChannel(client, tt)
+			channel(client, target)
 			openConnections++
 			log.Println("Open connections -> ", openConnections)
 		}
