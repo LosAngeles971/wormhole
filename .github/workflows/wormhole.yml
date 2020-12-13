@@ -1,6 +1,8 @@
 name: Go
 
 on:
+  workflow_dispatch:
+    branches: [ main ]
   push:
     branches: [ main ]
   pull_request:
@@ -44,6 +46,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: wormhole
-        path: bin/wormhole*
+        path: /home/runner/work/wormhole/wormhole/bin/*
         
         
