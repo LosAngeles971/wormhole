@@ -34,10 +34,11 @@ jobs:
 
     - name: Build
       run: |
-        ls -l $CI_PROJECT_DIR/bin/
         export CI_PROJECT_DIR="/home/runner/work/wormhole/wormhole"
+        ls -l $CI_PROJECT_DIR/bin/
         sh $CI_PROJECT_DIR/build/build.sh win
         ls -l $CI_PROJECT_DIR/bin/
+      shell: bash
 
     - name: Test
       run: |
