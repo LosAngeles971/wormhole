@@ -21,6 +21,6 @@ Usage:
 func init() {
 	rootCmd.AddCommand(openCmd)
 	rootCmd.PersistentFlags().StringVarP(&internal.Source, "source", "s", "", "Source in form of <bind address>:<port>")
-	rootCmd.PersistentFlags().StringVarP(&internal.Target, "target", "t", "", "Target in form of <address>:<port>ss")
+	rootCmd.PersistentFlags().StringVarP(&internal.Target, "target", "t", "", "Target in form of <address>:<port>")
 	rootCmd.PersistentFlags().IntVarP(&internal.MaxConnections, "max", "m", 20, "Number of max connections (default is 20)")
 }

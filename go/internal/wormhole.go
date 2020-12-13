@@ -46,23 +46,29 @@ func getHost(endpoint string) (Host, error) {
 }
 
 func handleChannel(client net.Conn, target Host) {
+	log.Println("Creating a channel...")
 	targetConn, err := net.Dial("tcp", target.getEndpoint())
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 	defer targetConn.Close()
-	var totalReceived int64 = 0
 	for {
-		received, err := io.Copy(client, targetConn)
+		_, err := io.Copy(client, targetConn)
 		if err != nil {
 			log.Fatal(err)
-			log.Println("Closing channel")
+			log.Println("Closing channel due error in communication between source to target")
 			break
 		}
-		totalReceived += received
+		_, err2 := io.Copy(targetConn, client)
+		if err2 != nil {
+			log.Fatal(err2)
+			log.Println("Closing channel due error in communication between target to source")
+			break
+		}
 	}
 	client.Close()
+	log.Println("Channel closed")
 	openConnections--
 }
 
