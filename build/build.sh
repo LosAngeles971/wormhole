@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ -z $CI_PROJECT_DIR ]]
 then
     echo "Missing CI_PROJECT_DIR"
